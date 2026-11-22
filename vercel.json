@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "https://foodexpress-vs1a.onrender.com/api/:path*" }
+  ]
+}
