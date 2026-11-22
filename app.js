@@ -114,6 +114,89 @@ function setSession(token, user) {
   if (!user) state.cart = EMPTY_CART;
 }
 
+// ---------- animated food drawings for the home page (plain SVG, no image files) ----------
+const ART = {
+  biryani: `
+    <svg viewBox="0 0 240 200" role="img" aria-label="Biryani in a handi">
+      <ellipse cx="120" cy="184" rx="86" ry="9" fill="#000" opacity=".08"/>
+      <g class="steam" fill="none" stroke="#d9c7b4" stroke-width="5" stroke-linecap="round">
+        <path d="M92 64c-10-12 10-20 0-34"/>
+        <path d="M120 56c-10-12 10-20 0-34" style="animation-delay:-1s"/>
+        <path d="M148 64c-10-12 10-20 0-34" style="animation-delay:-2s"/>
+      </g>
+      <ellipse cx="120" cy="104" rx="84" ry="14" fill="#7a3b14"/>
+      <path d="M44 106Q120 30 196 106Z" fill="#fbe7a1"/>
+      <path d="M70 100Q120 56 170 100Z" fill="#f6c453" opacity=".7"/>
+      <g fill="#fff8e1">
+        <ellipse cx="78" cy="96" rx="5" ry="2" transform="rotate(-20 78 96)"/><ellipse cx="96" cy="80" rx="5" ry="2" transform="rotate(25 96 80)"/>
+        <ellipse cx="112" cy="70" rx="5" ry="2" transform="rotate(-10 112 70)"/><ellipse cx="160" cy="94" rx="5" ry="2" transform="rotate(30 160 94)"/>
+        <ellipse cx="104" cy="96" rx="5" ry="2"/><ellipse cx="176" cy="100" rx="5" ry="2" transform="rotate(-25 176 100)"/>
+      </g>
+      <g fill="#ef8a1f">
+        <ellipse cx="88" cy="90" rx="5" ry="2" transform="rotate(15 88 90)"/><ellipse cx="124" cy="84" rx="5" ry="2" transform="rotate(-30 124 84)"/>
+        <ellipse cx="150" cy="80" rx="5" ry="2" transform="rotate(10 150 80)"/><ellipse cx="66" cy="102" rx="5" ry="2"/>
+      </g>
+      <g transform="rotate(-22 142 80)">
+        <rect x="156" y="76" width="18" height="7" rx="3.5" fill="#f4ecdc"/>
+        <ellipse cx="142" cy="80" rx="20" ry="13" fill="#b4531d"/>
+        <ellipse cx="137" cy="76" rx="9" ry="4" fill="#d9772f" opacity=".8"/>
+      </g>
+      <ellipse cx="98" cy="88" rx="12" ry="9" fill="#fff"/><circle cx="98" cy="88" r="5" fill="#f6b819"/>
+      <path d="M118 62q8-10 16-2q-8 8-16 2Z" fill="#3c9a3c"/><path d="M162 92q6-9 14-3q-7 7-14 3Z" fill="#3c9a3c"/>
+      <path d="M36 104H204Q198 172 120 178Q42 172 36 104Z" fill="#c4692a"/>
+      <path d="M44 126Q120 142 196 126" fill="none" stroke="#f1c27d" stroke-width="5" stroke-dasharray="2 9" stroke-linecap="round"/>
+      <path d="M36 104Q120 124 204 104" fill="none" stroke="#e8964f" stroke-width="9" stroke-linecap="round"/>
+    </svg>`,
+  pizza: `
+    <svg viewBox="0 0 200 200" role="img" aria-label="Pizza">
+      <defs>
+        <clipPath id="pz-main"><path d="M100 100L169.3 60A80 80 0 1 1 100 20Z"/></clipPath>
+        <clipPath id="pz-slice"><path d="M100 100L100 20A80 80 0 0 1 169.3 60Z"/></clipPath>
+        <g id="pz-top">
+          <circle cx="100" cy="100" r="80" fill="#e3a04f"/>
+          <circle cx="100" cy="100" r="71" fill="#d9472b"/>
+          <circle cx="100" cy="100" r="66" fill="#f7c948"/>
+          <g fill="#ffe08a"><circle cx="70" cy="80" r="10"/><circle cx="128" cy="134" r="12"/><circle cx="84" cy="138" r="8"/><circle cx="140" cy="76" r="9"/></g>
+          <g fill="#b8322a"><circle cx="72" cy="112" r="10"/><circle cx="104" cy="74" r="10"/><circle cx="136" cy="108" r="10"/><circle cx="104" cy="146" r="10"/><circle cx="118" cy="46" r="9"/><circle cx="148" cy="62" r="8"/><circle cx="56" cy="76" r="8"/></g>
+          <g fill="#3f9a3a"><ellipse cx="90" cy="100" rx="7" ry="4" transform="rotate(30 90 100)"/><ellipse cx="120" cy="122" rx="7" ry="4" transform="rotate(-20 120 122)"/><ellipse cx="132" cy="54" rx="6" ry="3.5" transform="rotate(40 132 54)"/><ellipse cx="70" cy="146" rx="6" ry="3.5"/></g>
+        </g>
+      </defs>
+      <ellipse cx="100" cy="188" rx="74" ry="8" fill="#000" opacity=".08"/>
+      <g class="spin">
+        <g clip-path="url(#pz-main)"><use href="#pz-top"/></g>
+        <g class="slice"><g clip-path="url(#pz-slice)"><use href="#pz-top"/></g></g>
+      </g>
+    </svg>`,
+  cake: `
+    <svg viewBox="0 0 200 200" role="img" aria-label="Chocolate cake">
+      <ellipse cx="100" cy="176" rx="86" ry="13" fill="#e3dced"/>
+      <ellipse cx="100" cy="172" rx="78" ry="10" fill="#f6f2fb"/>
+      <ellipse cx="100" cy="164" rx="62" ry="13" fill="#4a2414"/>
+      <rect x="38" y="92" width="124" height="72" fill="#5e301b"/>
+      <rect x="38" y="124" width="124" height="9" fill="#f3d6a8"/>
+      <ellipse cx="100" cy="92" rx="62" ry="13" fill="#3a1a0d"/>
+      <g fill="#3a1a0d">
+        <rect x="40" y="92" width="10" height="20" rx="5"/><rect x="58" y="92" width="10" height="30" rx="5"/>
+        <rect x="80" y="92" width="10" height="16" rx="5"/><rect x="104" y="92" width="10" height="26" rx="5"/>
+        <rect x="126" y="92" width="10" height="18" rx="5"/><rect x="148" y="92" width="10" height="24" rx="5"/>
+      </g>
+      <g class="sprinkles">
+        <rect x="70" y="86" width="7" height="2.6" rx="1.3" fill="#ff6fa5" transform="rotate(25 70 86)"/>
+        <rect x="88" y="94" width="7" height="2.6" rx="1.3" fill="#ffd23f" transform="rotate(-30 88 94)"/>
+        <rect x="122" y="88" width="7" height="2.6" rx="1.3" fill="#5ec8ff" transform="rotate(15 122 88)"/>
+        <rect x="140" y="94" width="7" height="2.6" rx="1.3" fill="#8be06b" transform="rotate(-20 140 94)"/>
+        <rect x="104" y="98" width="7" height="2.6" rx="1.3" fill="#ff6fa5" transform="rotate(60 104 98)"/>
+        <rect x="56" y="94" width="7" height="2.6" rx="1.3" fill="#5ec8ff" transform="rotate(-50 56 94)"/>
+      </g>
+      <path d="M100 76q2-14 12-18" fill="none" stroke="#3c7a2e" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="100" cy="80" r="10" fill="#d62839"/><circle cx="96" cy="76" r="3" fill="#fff" opacity=".6"/>
+      <rect x="130" y="52" width="8" height="34" rx="2" fill="#ff8fab"/>
+      <path d="M130 60l8-5M130 70l8-5M130 80l8-5" stroke="#fff" stroke-width="2.5"/>
+      <path class="flame" d="M134 50c-7-6-6-14 0-22c6 8 7 16 0 22Z" fill="#ffb703"/>
+      <path class="flame" d="M134 48c-3-3-3-7 0-11c3 4 3 8 0 11Z" fill="#fb8500"/>
+    </svg>`,
+};
+
 // ---------- page: menu (Kitchen + Instant Store) ----------
 function renderMenu() {
   const instant = state.store === "instant";
@@ -132,14 +215,14 @@ function renderMenu() {
     <section class="hero">
       <div>
         <span class="eyebrow"><i></i> Kitchen open &middot; delivering now</span>
-        <h1>Hot meals in 40.<br>Snacks in <em>10&nbsp;minutes.</em></h1>
+        <h1>Hot meals in 40&nbsp;minutes.<br>Snacks in <em>10&nbsp;minutes.</em></h1>
         <p>Order freshly cooked food from our kitchen, or grab famous snacks from the Instant Store and get them at your door in ten minutes.</p>
         <div class="search"><input id="search" type="search" placeholder="Search biryani, dosa, samosa..." value="${esc(state.search)}" aria-label="Search menu"></div>
       </div>
       <div class="collage" aria-hidden="true">
-        <figure class="c1"><img src="images/chicken-biryani.jpg" alt=""></figure>
-        <figure class="c2"><img src="images/masala-dosa.jpg" alt=""></figure>
-        <figure class="c3"><img src="images/samosa.jpg" alt=""></figure>
+        <figure class="c1 art-biryani">${ART.biryani}<figcaption>Biryani</figcaption></figure>
+        <figure class="c2 art-pizza">${ART.pizza}<figcaption>Pizza</figcaption></figure>
+        <figure class="c3 art-cake">${ART.cake}<figcaption>Chocolate cake</figcaption></figure>
         <span class="sticker s1">&#9889; 10 min delivery</span>
         <span class="sticker s2">Free delivery over ${rupees(499)}</span>
       </div>
