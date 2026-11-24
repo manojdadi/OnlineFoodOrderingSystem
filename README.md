@@ -39,7 +39,7 @@ g++ -std=c++17 backend/main.cpp -o server.exe -lws2_32
 server.exe
 ```
 
-Then open **http://localhost:8080** in your browser. Stop the server with `Ctrl + C`.
+Then open **https://onlinefoodorderingsystem-woad.vercel.app/** in your browser. Stop the server with `Ctrl + C`.
 If port 8080 is busy, pass another one: `./server 9090`.
 
 ## Accounts
