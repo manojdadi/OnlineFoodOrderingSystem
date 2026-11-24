@@ -45,12 +45,24 @@ async function api(method, path, data) {
     options.headers["Content-Type"] = "application/x-www-form-urlencoded";
     options.body = new URLSearchParams(data).toString();
   }
+  // The free online server sleeps when nobody uses it and takes up to a minute to wake up.
+  // So a GET request is tried again for about 90 seconds before giving up.
+  // (POST requests such as placing an order are sent only once, so nothing is done twice.)
+  const tries = method === "GET" ? 30 : 1;
   let reply;
-  try {
-    const response = await fetch(path, options);
-    reply = await response.json();
-  } catch (e) {
-    throw new Error("Cannot reach the server. Is ./server running?");
+  for (let i = 1; i <= tries; i++) {
+    try {
+      const response = await fetch(path, options);
+      reply = await response.json();
+      break;
+    } catch (e) {
+      if (i === tries) throw new Error("Cannot reach the server. Please try again in a minute.");
+      if (i === 1) {
+        toast("Waking up the server, please wait...");
+        if (!app.innerHTML.trim()) app.innerHTML = `<div class="empty">&#9203; Waking up the server&hellip; this can take up to a minute.</div>`;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+    }
   }
   if (!reply.success) throw new Error(reply.message);
   return reply.data;
